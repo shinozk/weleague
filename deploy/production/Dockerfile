@@ -21,9 +21,15 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN chown -R www-data:www-data /var/www/html
 
-COPY startup.sh /etc/
-RUN chmod +x /etc/startup.sh
+#COPY startup.sh /etc/
+#RUN chmod +x /etc/startup.sh
 
-CMD ["/etc/startup.sh"]
+#CMD ["/etc/startup.sh"]
+
+RUN composer install
+
+RUN npm install
+RUN npm run build
+CMD ["artisan", "serve", "--host", "0.0.0.0", "--port", "8080"]
 
 EXPOSE 8080
