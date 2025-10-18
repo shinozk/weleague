@@ -1,0 +1,8 @@
+version: '3'
+services:
+  php:
+    build: ./deploy/local
+    volumes:
+      - ./laravel:/var/www/html:cached
+    ports:
+      - 9092:80
