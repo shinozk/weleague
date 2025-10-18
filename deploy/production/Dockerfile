@@ -13,12 +13,10 @@ RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ && \
     apk del libpng-dev libjpeg-turbo-dev #&& \
 
 RUN ls -l
-RUN pwd
 
 COPY ./laravel/ /var/www/html
 RUN ls -l
 WORKDIR /var/www/html
-RUN pwd
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN chown -R www-data:www-data /var/www/html
