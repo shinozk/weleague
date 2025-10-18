@@ -31,6 +31,6 @@ RUN composer install
 
 RUN npm install
 RUN npm run build
-CMD ["artisan", "serve", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["php", "artisan", "serve", "--host", "0.0.0.0", "--port", "8080"]
 
 EXPOSE 8080
