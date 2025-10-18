@@ -6,7 +6,6 @@ RUN apk update && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     apk del tzdata && \
     rm -rf /var/cache/apk/*
-
  
 RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ && \
     docker-php-ext-install -j$(nproc) pdo pdo_mysql exif bcmath gd && \
