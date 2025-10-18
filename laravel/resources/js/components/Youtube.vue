@@ -34,8 +34,6 @@
             },
         },
         data: function() {
-console.log(process.env.VITE_GOOGLE_YOUTUBE_API_KEY);
-console.log(process.env.MIX_GOOGLE_YOUTUBE_API_KEY);
             return {
                 results: null,
                 order: "viewCount", // リソースを再生回数の多い順に並べます。
