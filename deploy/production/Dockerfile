@@ -25,6 +25,8 @@ RUN chown -R www-data:www-data /var/www/html
 
 #CMD ["/etc/startup.sh"]
 
+RUN ls -l
+
 RUN composer install
 
 RUN npm install
