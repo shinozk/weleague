@@ -1,31 +1,29 @@
-FROM php:8.4-fpm
-RUN apt-get update \
-    && apt-get install -qq -y --no-install-recommends \
-    zlib1g-dev \
-    zip \
-    unzip \
-    curl \
-    nodejs \
-    git \
-    vim \
-    wget \
-    nkf \
-    autoconf \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && docker-php-ext-install pdo pdo_mysql
+FROM php:8.4-alpine
 
-COPY --from=composer /usr/bin/composer /usr/bin/composer
-COPY --from=node /usr/local/bin/ /usr/local/bin
-COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN apk add --update --no-cache build-base
+RUN apk update && \
+    apk --no-cache add libpng libjpeg libpng-dev libjpeg-turbo-dev autoconf build-base tzdata nodejs npm && \
+    cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+    apk del tzdata && \
+    rm -rf /var/cache/apk/*
 
+ 
+RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ && \
+    docker-php-ext-install -j$(nproc) pdo pdo_mysql exif bcmath gd && \
+    apk del libpng-dev libjpeg-turbo-dev #&& \
 
-COPY ./laravel/ /var/www/laravel
+COPY php*.ini /usr/local/etc/php/conf.d/
 
-COPY ./deploy/production/startup.sh /etc/
+#COPY ./laravel/ /var/www/html
+WORKDIR /var/www/html
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+RUN chown -R www-data:www-data /var/www/html
+
+COPY startup.sh /etc/
 RUN chmod +x /etc/startup.sh
 
-WORKDIR /var/www/laravel
-
 CMD ["/etc/startup.sh"]
+
 EXPOSE 8080
