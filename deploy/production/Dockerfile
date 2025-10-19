@@ -11,8 +11,6 @@ RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ && \
     docker-php-ext-install -j$(nproc) pdo pdo_mysql exif bcmath gd && \
     apk del libpng-dev libjpeg-turbo-dev #&& \
 
-RUN ls -l
-
 COPY ./laravel/ /var/www/html
 RUN ls -l
 WORKDIR /var/www/html
@@ -20,17 +18,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN chown -R www-data:www-data /var/www/html
 
-#COPY startup.sh /etc/
-#RUN chmod +x /etc/startup.sh
-
-#CMD ["/etc/startup.sh"]
-
-RUN ls -l
-
 RUN composer install
 
-RUN npm install
-RUN npm run build
+RUN npm install && npm run build
 CMD ["php", "artisan", "serve", "--host", "0.0.0.0", "--port", "8080"]
 
 EXPOSE 8080
