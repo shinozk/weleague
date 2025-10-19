@@ -5,7 +5,7 @@
 <title>@yield('title', 'FINASH 女子サッカー情報サイト | なでしこリーグ（WEリーグ） | TOP' )</title>
 <!-- Bootstrap CSS -->
 <link href="/css/style.css" rel="stylesheet">
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -14,11 +14,14 @@
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55213169-8"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+     window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'UA-55213169-8');
+     function gtag() {
+          dataLayer.push(arguments);
+     }
+     gtag('js', new Date());
+
+     gtag('config', 'UA-55213169-8');
 </script>
 
 <!-- Google Auto Ads -->
@@ -30,4 +33,3 @@
      });
 </script>
 <!-- Google Auto Ads -->
-
