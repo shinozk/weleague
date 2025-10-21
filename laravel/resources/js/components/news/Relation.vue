@@ -65,12 +65,19 @@ export default {
         };
     },
     created() {
+        const token = document.head.querySelector('meta[name="csrf-token"]');
         axios
             .post("/ajax/news", {
                 limit: 5,
                 mode: this.mode,
                 id: this.id,
-            })
+            },
+                    {
+                        headers: {
+                            "X-CSRF-TOKEN": token.content,
+                        },
+                    }                 
+            )
             .then((response) => {
                 this.items = response.data.data;
                 console.log(this.item);

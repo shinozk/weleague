@@ -140,7 +140,14 @@
             }
         },
         created() {
-            axios.post(`/ajax/players/${this.player.id}/belong`,
+                    const token = document.head.querySelector('meta[name="csrf-token"]');
+
+            axios.post(`/ajax/players/${this.player.id}/belong`, [],
+                                {
+                        headers: {
+                            "X-CSRF-TOKEN": token.content,
+                        },
+                    }     
             ).then(response => {
                 const ret = response.data.data;
                 this.items = ret;

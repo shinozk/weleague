@@ -322,8 +322,15 @@ export default {
             if (this.year != null) {
                 param.year = this.year;
             }
+            const token = document.head.querySelector('meta[name="csrf-token"]');
             axios
-                .post(`/ajax/games/lists${location.search}`, param)
+                .post(`/ajax/games/lists${location.search}`, param,
+                    {
+                        headers: {
+                            "X-CSRF-TOKEN": token.content,
+                        },
+                    }
+                )
                 .then((response) => {
                     const ret = response.data.data;
                     this.items = ret;
@@ -367,9 +374,16 @@ export default {
                 year: this.year,
                 id: league_id,
             };
+            const token = document.head.querySelector('meta[name="csrf-token"]');
 
             axios
-                .post("/ajax/teams/ranking", param)
+                .post("/ajax/teams/ranking", param,
+                    {
+                        headers: {
+                            "X-CSRF-TOKEN": token.content,
+                        },
+                    }                
+                )
                 .then((response) => {
                     const ret = response.data.data;
                     this.ranking[league_id] = ret;

@@ -34,10 +34,16 @@ export default {
         }
     },
     created() {
+        const token = document.head.querySelector('meta[name="csrf-token"]');
         axios.post('/ajax/teams/select_year',
             {
                 id: this.id
-            }
+            },
+                                {
+                        headers: {
+                            "X-CSRF-TOKEN": token.content,
+                        },
+                    }
             ).then(response => {
                 const ret = response.data.data;
                 this.items = ret;

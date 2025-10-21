@@ -22,8 +22,14 @@ const getImageUrl = (iconName) => {
 };
 
 onMounted(() => {
+    const token = document.head.querySelector('meta[name="csrf-token"]');
     axios
-        .post(`/ajax/players/${props.id}/sns_timeline`)
+        .post(`/ajax/players/${props.id}/sns_timeline`,[],
+            {
+                headers: {
+                    "X-CSRF-TOKEN": token.content,
+                 },
+            })
         .then(res => {
             results.value = res.data;
         });
